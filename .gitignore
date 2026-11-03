@@ -1,0 +1,68 @@
+# ===== Python 字节码与构建产物 =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ===== 虚拟环境 =====
+.venv/
+venv/
+env/
+ENV/
+
+# ===== 环境变量与密钥（禁止提交真实凭据；保留示例文件） =====
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ===== 测试 / 类型检查 / 覆盖率 / Jupyter =====
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.ipynb_checkpoints/
+
+# ===== IDE / 编辑器 =====
+.idea/
+.vscode/
+*.swp
+
+# ===== 日志 =====
+*.log
+logs/
+
+# ===== 操作系统杂项 =====
+.DS_Store
+Thumbs.db
+Desktop.ini
+# macOS AppleDouble 垃圾文件
+**/._*
+
+# ===== 本项目数据：只保留处理代码，数据与产物一律不入库 =====
+# 原始数据（读者按 README 指引从 quotsoft.net 下载后放回 data/raw）
+data/raw/
+# 最终处理数据
+data/processed/
+# Spark 中间产物（part 文件、校验文件、_SUCCESS、TSV）
+data/interim/**/part-*
+data/interim/**/*.crc
+data/interim/**/_SUCCESS
+data/interim/sql_analysis/*.tsv
+# 算法结果产物（由 run_pipeline.py 重新生成）
+data/analysis/output/
+# 说明：data/analysis/*.py、data/interim/*.md、data/interim/sql_analysis/*.sql 保留
+
+# ===== 仅服务于已废弃的 Spark 手动链路的 JDBC 驱动 =====
+jars/

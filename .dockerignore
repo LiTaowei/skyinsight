@@ -1,0 +1,27 @@
+.git
+.gitignore
+.idea
+.vscode
+.venv
+venv
+__pycache__
+**/__pycache__
+*.py[cod]
+.env
+.env.*
+!.env.example
+*.log
+logs
+
+# 数据与产物：容器内通过 compose 挂载，不进镜像
+data/raw
+data/interim
+data/processed
+data/analysis/output
+
+# 仅服务于已废弃的 Spark 手动链路
+jars
+
+# 临时/工作文件
+filelist.txt
+gitfiles.txt

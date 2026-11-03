@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>城市空气质量分析系统</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="sticky-head">
+<header class="topbar">
+  <div class="brand">
+    <h1>城市空气质量分析系统</h1>
+    <span class="sub">2022-2024 · 20 城 · 小时级监测数据</span>
+  </div>
+  <div class="status">
+    <span id="healthDot" class="dot"></span>
+    <span id="healthText">连接中…</span>
+  </div>
+</header>
+
+<nav class="filters">
+  <label>城市
+    <select id="citySelect"><option value="">全部城市</option></select>
+  </label>
+  <label>年份
+    <select id="yearSelect">
+      <option value="">全期</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+      <option value="2024">2024</option>
+    </select>
+  </label>
+  <label>聚类批次
+    <select id="batchSelect">
+      <option value="all">全期</option>
+      <option value="winter">冬季</option>
+      <option value="summer">夏季</option>
+    </select>
+  </label>
+  <span class="hint">筛选器将在动作 7-9 与图表联动</span>
+</nav>
+</div>
+
+<main class="grid">
+
+  <!-- ===== 统计图表区（已接通 /api/stats/*） ===== -->
+  <section class="card">
+    <h2>四季 PM2.5 / O3 / AQI 均值</h2>
+    <div class="chart" id="chart-seasonal"></div>
+  </section>
+  <section class="card">
+    <h2>24 小时昼夜污染曲线</h2>
+    <div class="chart" id="chart-hourly"></div>
+  </section>
+  <section class="card">
+    <h2>城市 AQI 排行榜</h2>
+    <div class="chart" id="chart-ranking"></div>
+  </section>
+  <section class="card">
+    <div class="card-head">
+      <h2>多城市月度 AQI 走势</h2>
+      <div class="city-picker" id="monthlyPicker">
+        <button type="button" id="monthlyPickerBtn" class="picker-btn">选择城市 (<span id="monthlyPickerCount">0</span>) ▾</button>
+        <div class="picker-panel" id="monthlyPickerPanel" hidden>
+          <div class="picker-quick">
+            <button type="button" data-quick="all">全部20城</button>
+            <button type="button" data-quick="none">清空</button>
+          </div>
+          <div class="picker-list" id="monthlyPickerList"></div>
+        </div>
+      </div>
+    </div>
+    <div class="chart" id="chart-monthly"></div>
+  </section>
+  <section class="card">
+    <h2>逐年优良天数占比</h2>
+    <div class="chart" id="chart-good-days"></div>
+  </section>
+  <section class="card">
+    <h2>首要污染物频次</h2>
+    <div class="chart" id="chart-pp"></div>
+  </section>
+
+  <!-- ===== 算法结果区（已接通 /api/analysis/*） ===== -->
+  <section class="card">
+    <h2>城市聚类散点（PCA 投影）</h2>
+    <div class="chart" id="chart-cluster"></div>
+  </section>
+  <section class="card">
+    <h2>PCA 载荷（指标 × 主成分）</h2>
+    <div class="chart" id="chart-loadings"></div>
+  </section>
+  <section class="card">
+    <h2>簇画像雷达（三类城市对比）</h2>
+    <div class="chart" id="chart-radar"></div>
+  </section>
+  <section class="card">
+    <h2>异常分数时间线（24h）</h2>
+    <div class="card-ctrl"><label class="mini">日期 <input type="date" id="tlDate"></label></div>
+    <div class="chart" id="chart-timeline"></div>
+  </section>
+  <section class="card wide">
+    <h2>异常事件列表（共 <span id="evtTotal">–</span> 条）</h2>
+    <div class="kpis" id="evtKpis"><span>加载中…</span></div>
+    <div class="evt-ctrl">
+      <label class="mini">视图
+        <select id="evtView">
+          <option value="top">TOP50 按时长</option>
+          <option value="all">全部（分页）</option>
+        </select>
+      </label>
+      <label class="mini"><input type="checkbox" id="evtMin6"> 仅看 ≥6 小时事件</label>
+      <span class="mini pager" id="evtPager" hidden>
+        <button type="button" id="evtPrev">上一页</button>
+        <span id="evtPageInfo">1 / 1</span>
+        <button type="button" id="evtNext">下一页</button>
+      </span>
+    </div>
+    <div class="table-wrap" id="table-events"></div>
+  </section>
+
+  <!-- ===== 地图与钻取区（已接通 /api/map /api/city） ===== -->
+  <section class="card">
+    <h2>全国 AQI 地图（最新时刻）</h2>
+    <div class="chart" id="chart-map"></div>
+  </section>
+  <section class="card">
+    <h2>城市钻取（点击地图 / 选择城市）</h2>
+    <div class="chart" id="chart-series"></div>
+  </section>
+
+</main>
+
+<footer>
+  数据来源：MySQL air_quality 库 · 后端 FastAPI（15 接口）· 前端原生 ECharts · 毕业设计第三阶段产出
+</footer>
+
+<script src="js/echarts.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/main.js"></script>
+<script src="js/charts/stats.js"></script>
+<script src="js/charts/analysis.js"></script>
+<script src="js/charts/mapview.js"></script>
+<script src="js/charts/ai.js"></script>
+</body>
+</html>
